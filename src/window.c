@@ -442,14 +442,14 @@ void node_rounded_border(node_t *n, layout_t layout)
 	xcb_get_geometry_reply_t *geo = xcb_get_geometry_reply(dpy, xcb_get_geometry(dpy, win), NULL);
 
 	if (geo != NULL)
-		window_rounded_border(win, geo, radius);
+		window_rounded_border(win, geo, single_monocle && layout == LAYOUT_MONOCLE ? radius + width : radius);
 
 	if (n->presel != NULL && n->presel != XCB_NONE) {
 		xcb_window_t fb = n->presel->feedback;
 		xcb_get_geometry_reply_t *fb_geo = xcb_get_geometry_reply(dpy, xcb_get_geometry(dpy, fb), NULL);
 
 		if (fb_geo != NULL)
-			window_rounded_border(fb, fb_geo, single_monocle && layout == LAYOUT_MONOCLE ? radius : radius + width);
+			window_rounded_border(fb, fb_geo, radius + width);
 	}
 }
 
